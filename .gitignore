@@ -1,0 +1,8 @@
+#Diretório do ambiente virtual do Python
+.venv/ 
+#Diretório de bytecode compilado gerado pelo Python
+__pycache__/
+#Arquivos compilados soltos
+*.pyc
+#Arquivos de registros
+logs/
