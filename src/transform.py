@@ -36,12 +36,10 @@ def transform(df: pd.DataFrame) -> pd.DataFrame:
 
 #============================#
 #Limpeza de valores nulos
-
     df = df.replace('Missing', np.nan)
     
 #============================#
 #Transformando colunas númericas e evitando erros na execução:
-
     colunas_numericas = [
         'rating',
         'main_hours',
@@ -55,6 +53,15 @@ def transform(df: pd.DataFrame) -> pd.DataFrame:
         df[coluna] = pd.to_numeric(df[coluna], errors='coerce')
 
 #============================#
+#Removo todo o registro que tiver ou ID ou NOME nulo
+    df = df.dropna(subset=['id', 'name'])
+
+#============================#
+#Transformo os registros de quantidade de avaliações e pessoas pesquisadas de NULO para ZERO
+    df['review_count'] = df['review_count'].fillna(0)
+    df['people_polled'] = df['people_polled'].fillna(0)
+
+#============================#
 #Removendo registros duplicados por id:
     df = df.drop_duplicates(
         subset=['id']
@@ -66,7 +73,6 @@ def transform(df: pd.DataFrame) -> pd.DataFrame:
         by='rating',
         ascending=False
     )
-
 #============================#
 #Retornando o dataframe :)
     return df
