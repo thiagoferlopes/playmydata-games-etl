@@ -6,3 +6,5 @@ __pycache__/
 *.pyc
 #Arquivos de registros
 logs/
+#Dados brutos
+data/raw/*
