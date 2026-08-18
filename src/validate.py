@@ -12,12 +12,17 @@ def validate(df):
 
 #============================#
 #Verifica se tem algum id nulo no dataframe:
-    if df['id'].isna().any() != 0:
+    if df['id'].isna().any():
         erros.append('Existe item nulo em: "id"')
 
 #============================#
+#Verifica se tem algum nome nulo no dataframe:
+    if df['name'].isna().any():
+        erros.append('Existe nome nulo em: "name"')
+
+#============================#
 #Verifica se tem algum id com duplicidade:
-    if df['id'].duplicated().any() != 0:
+    if df['id'].duplicated().any():
         erros.append('Existe duplicidade em: "id"')
 
 #============================#
@@ -46,3 +51,4 @@ def validate(df):
     return erros
 
 #============================#
+
