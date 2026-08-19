@@ -1,2 +1,5 @@
 numpy==2.5.2
 pandas==3.0.5
+python_dotenv==1.2.3
+psycopg2_binary==2.9.12
+sqlalchemy==2.0.52
