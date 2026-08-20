@@ -2,6 +2,8 @@
 import os
 from dotenv import load_dotenv
 from sqlalchemy import create_engine
+from extract import extract
+from transform import transform
 
 #============================#
 #Carrega a função do dotenv que carrega as variáveis do .env:
@@ -36,10 +38,22 @@ def get_engine():
     return engine
 
 #============================#
+#Definindo a função load
+def loading(df, engine):
+
+#============================#
+#Grava o DataFrame na tabela games_pc, substituindo o conteúdo existente.
+    df.to_sql("games_pc", con=engine, if_exists="replace", index=False)
+
+#============================#
 #Verifica se esse arquivos está sendo exportado diretamente em src/load.py:
 if __name__ == '__main__':
     engine = get_engine()
-    
+    df = extract('data/raw/all_games_PC.csv')
+    df = transform(df)
+    loading(df, engine)
+    #print(df.head(100))
+    print(len(df))
     try:
         with engine.connect() as conn:
             print('SUCESSO')
