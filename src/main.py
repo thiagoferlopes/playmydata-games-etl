@@ -1,9 +1,16 @@
 #Importando a função de cada módulo da pipeline:
+import logging
 from extract import extract
 from transform import transform
 from validate import validate
 from load import loading, get_engine
 
+#============================#
+logging.basicConfig(
+    filename= 'logs/pipeline.log',
+    level= logging.INFO,
+    format= "%(asctime)s - %(levelname)s - %(message)s"
+)
 #============================#
 #Definindo a função main
 def main():
@@ -14,12 +21,18 @@ def main():
 
 #============================#
 #Extraindo o arquivo CSV bruto para um DataFrame:
-    df = extract(caminho_csv)
+    try:
+        df = extract(caminho_csv)
+        logging.info('Extração concluída com sucesso.')
+    except FileNotFoundError as e:
+        logging.error(f'Erro na extração: {e}')
+        raise
 
 #============================#
 #Transformando o DataFrame (tipos, nulos, seleção de colunas, duplicados, ordenação):
     df = transform(df)
-    
+    logging.info('Transformação concluída.')
+
 #============================#
 #Retorna uma lista de erros encontrados
     erros = validate(df)
@@ -28,15 +41,20 @@ def main():
 #Se existirem erros, imprime cada um e interrompe o pipeline sem carregar nada:
     if erros:
         for erro in erros:
-            print(erro)
+            logging.error(erro)
         return
 
 #============================#
 #Se não existir nenhum erro, cria a conexão e carrega os dados para o PostgreSQL:
     else:
-        engine = get_engine()
-        loading(df, engine)
-        print('SUCESSO!')
+        try:
+            engine = get_engine()
+            loading(df, engine)
+            logging.info('Carga concluída com sucesso.')
+            print('SUCESSO!')
+        except Exception as e:
+            logging.error(f'Erro na carga: {e}')
+            raise
         
 #============================#
 #Executa o main somente quando esse arquivo é rodado diretamente:
