@@ -46,7 +46,7 @@ def loading(df, engine):
     df.to_sql("games_pc", con=engine, if_exists="replace", index=False)
 
 #============================#
-#Verifica se esse arquivos está sendo exportado diretamente em src/load.py:
+#Área de teste:
 if __name__ == '__main__':
     engine = get_engine()
     df = extract('data/raw/all_games_PC.csv')
