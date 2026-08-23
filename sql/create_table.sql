@@ -1,3 +1,4 @@
+/*Criação de tabela*/
 CREATE TABLE IF NOT EXISTS games_pc(
     id INT NOT NULL,
     name TEXT NOT NULL,
