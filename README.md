@@ -58,7 +58,8 @@ DB_NAME=playmydata_etl
 >python3 src/main.py
 
 
-![Print do Terminal](images/print-terminal.png) 
+![Print do Terminal](images/print-terminal.png)
+
 Se aparecer `SUCESSO!` no terminal, os dados foram carregados. 🎉
 
 <!-- print do terminal com o "SUCESSO!" -->
